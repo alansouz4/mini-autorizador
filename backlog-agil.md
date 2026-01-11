@@ -1,10 +1,10 @@
 ## Backlog – Mini Autorizador (VR Benefícios)
 ### Épico 1: Configuração do Projeto
 - **História 1.1**: Como desenvolvedor, quero configurar o projeto em **Java + Maven + Spring Boot**, para garantir que a aplicação siga o padrão solicitado.
-  - Tarefa: Criar projeto base com Spring Initializr.
-  - Tarefa: Configurar dependências no pom.xml (Spring Web, Spring Data, Lombok, etc.).
-  - Tarefa: Configurar autenticação básica (username/password).
-  - Tarefa: Criar estrutura inicial de pacotes (controller, service, repository, model).
+  - ✅ Tarefa: Criar projeto base com Spring Initializr. 
+  - ✅ Tarefa: Configurar dependências no pom.xml (Spring Web, Spring Data, Lombok, etc.).
+  - ✅❌ Tarefa: Configurar autenticação básica (username/password).
+  - ✅❌ Tarefa: Criar estrutura inicial de pacotes (controller, service, repository, model).
     - **Story Point**: 5
 - **História 1.2**: Como desenvolvedor, quero configurar o docker-compose com banco relacional ou não relacional, para persistir os cartões.
   - Tarefa: Validar conexão com banco relacional.
