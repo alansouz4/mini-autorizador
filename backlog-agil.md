@@ -7,9 +7,9 @@
   - ✅ Tarefa: Criar estrutura inicial de pacotes (application, domain, infrastructure).
     - **Story Point**: 5
 - **História 1.2**: Como desenvolvedor, quero configurar o docker-compose com banco relacional ou não relacional, para persistir os cartões.
-  - Tarefa: Validar conexão com banco relacional.
-  - Tarefa: Documentar no README a escolha do banco e suposições.
-  - Tarefa: Comentar o banco não utilizado no docker-compose.yml.
+  - ✅ Tarefa: Validar conexão com banco relacional.
+  - ✅❌ Tarefa: Documentar no README a escolha do banco e suposições.
+  - ✅❌ Tarefa: Comentar o banco não utilizado no docker-compose.yml.
     - **Story Point**: 3
 
 ### Épico 2: Gestão de Cartões

@@ -21,7 +21,7 @@ services:
     container_name: mysql
     restart: always
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_DATABASE: miniautorizador
       MYSQL_ROOT_PASSWORD:
