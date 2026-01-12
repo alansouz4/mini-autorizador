@@ -97,15 +97,61 @@ OK
 - 401 Unauthorized → erro de autenticação
 
 ---
-## 🔐 Autenticação com Basic Auth
+## 🔐 Autenticação com Basic Auth (Spring Boot 4 / Spring Security 6)
 O projeto mini-autorizador utiliza Basic Authentication para proteger suas rotas.
 Esse mecanismo é simples e baseado em enviar as credenciais (usuário e senha) no cabeçalho da requisição HTTP.
+A configuração é feita através de um bean SecurityFilterChain, que define quais endpoints exigem autenticação e quais são públicos.
+
 
 ### 📌 Como funciona
 - O cliente envia o cabeçalho Authorization com o valor Basic <token>.
 - O <token> é a string username:password codificada em Base64.
 - O servidor valida as credenciais e, se corretas, permite o acesso ao recurso
 
+### ⚙️ Classe de Configuração
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable()) // desabilita CSRF para formulários HTML
+            .authorizeHttpRequests(auth -> auth // autoriza todas as requisições
+                .anyRequest().authenticated()
+            )
+            .httpBasic(); // habilita Basic Auth
+
+        return http.build();
+    }
+
+    @Bean
+    public InMemoryUserDetailsManager userDetailsService() {
+        UserDetails admin = User.withUsername("admin")
+            .password("{noop}123")
+            .roles("USER")
+            .build();
+
+        return new InMemoryUserDetailsManager(admin); // cria um usuário em memória
+    }
+}
+```
+
+### 📂 Estrutura de segurança
+```
+/src
+  /domain
+    /model
+    /service
+    /ports
+      AuthenticationPort.java   // contrato
+  /application
+    LoginUseCase.java           // caso de uso
+  /infrastructure
+    /auth
+      SecurityConfig.java       // configuração técnica
+```
 ### 🧾 Exemplo de requisição
 1. Gerando o token
    - Se o usuário for admin e a senha 123, a string é: ``admin:123``
