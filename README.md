@@ -97,6 +97,35 @@ OK
 - 401 Unauthorized → erro de autenticação
 
 ---
+## 🔐 Autenticação com Basic Auth
+O projeto mini-autorizador utiliza Basic Authentication para proteger suas rotas.
+Esse mecanismo é simples e baseado em enviar as credenciais (usuário e senha) no cabeçalho da requisição HTTP.
+
+### 📌 Como funciona
+- O cliente envia o cabeçalho Authorization com o valor Basic <token>.
+- O <token> é a string username:password codificada em Base64.
+- O servidor valida as credenciais e, se corretas, permite o acesso ao recurso
+
+### 🧾 Exemplo de requisição
+1. Gerando o token
+   - Se o usuário for admin e a senha 123, a string é: ``admin:123``
+   - Codificada em Base64: ``YWRtaW46MTIz``
+
+2. Usando no cabeçalho HTTP
+   ``GET /api/contas HTTP/1.1
+   Host: localhost:8080
+   Authorization: Basic YWRtaW46MTIz``
+
+3. Exemplo com curl
+   ``curl -X GET "http://localhost:8080/api/contas" \
+   -H "Authorization: Basic YWRtaW46MTIz"``
+
+✅ Resumindo
+- Cabeçalho: Authorization: Basic <Base64(username:password)>
+- Exemplo: Authorization: Basic YWRtaW46MTIz
+- Uso: Protege endpoints do mini-autorizador garantindo que apenas usuários autenticados acessem os recursos.
+
+---
 
 ## 🏗️ Arquitetura e padrões
 - ### Hexagonal Architecture (Ports & Adapters)
