@@ -20,9 +20,9 @@
   - ✅ Tarefa: Retornar resposta conforme contrato.
     - **Story Point**: 8
 - **História 2.2**: Como usuário, quero consultar o saldo de um cartão existente, para acompanhar meus gastos.
-  - ✅❌ Tarefa: Implementar endpoint GET /cartoes/{numeroCartao}.
-  - ✅❌ Tarefa: Validar existência do cartão (404 se não encontrado).
-  - ✅❌ Tarefa: Retornar saldo atual.
+  - ✅ Tarefa: Implementar endpoint GET /cartoes/{numeroCartao}.
+  - ✅ Tarefa: Validar existência do cartão (404 se não encontrado).
+  - ✅ Tarefa: Retornar saldo atual.
     - **Story Point**: 5
 
 ### Épico 3: Autorização de Transações

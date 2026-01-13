@@ -39,7 +39,7 @@ O objetivo é construir um mini-autorizador em **Java + Spring Boot** que permit
 ### 1. Criar novo cartão
 ```bash  
   curl -X 'POST' \
-  'http://localhost:8081/v1/cards' \
+  'http://localhost:8080/v1/cards' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -u 'admin':'admin123' \
@@ -52,8 +52,8 @@ O objetivo é construir um mini-autorizador em **Java + Spring Boot** que permit
 - 201 Created
 ```json
 {
-  "senha": "1234",
-  "numeroCartao": "6549873025634501"
+  "cardPassword": "1234",
+  "cardNumber": "6549873025634501"
 }
 ```
 - 422 Unprocessable Entity → cartão já existe
@@ -61,15 +61,16 @@ O objetivo é construir um mini-autorizador em **Java + Spring Boot** que permit
 
 ### 2. Obter saldo do cartão
 ```bash
-curl -X GET "http://localhost:8080/cartoes/6549873025634501" \
-  -u username:password
+curl -X GET "http://localhost:8080/v1/cards/6549873025634501" \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -u 'admin':'admin123'
 ```
 **Responses**
 - 200 OK
 ```json
 {
-  "senha": "1234",
-  "numeroCartao": "6549873025634501"
+  "balance": 500.0
 }
 ```
 - 404 Not Found → cartão não existe
@@ -77,13 +78,13 @@ curl -X GET "http://localhost:8080/cartoes/6549873025634501" \
 
 ### 3. Realizar uma transação
 ```bash
-curl -X POST "http://localhost:8080/transacoes" \
+curl -X POST "http://localhost:8080/transactions" \
   -H "Content-Type: application/json" \
   -u username:password \
   -d '{
-    "numeroCartao": "6549873025634501",
-    "senhaCartao": "1234",
-    "valor": 10.00
+    "cardNumber": "6549873025634501",
+    "cardPassword": "1234",
+    "balance": 10.00
   }'
 ```
 **Responses**

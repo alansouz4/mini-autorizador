@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vr.mini_autorizador.application.dto.CardRequest;
 import vr.mini_autorizador.application.dto.CardResponse;
+import vr.mini_autorizador.domain.exception.CardNotFoundException;
 import vr.mini_autorizador.domain.model.Card;
 import vr.mini_autorizador.domain.repository.CardRepository;
 
@@ -29,5 +30,11 @@ public class CardUseCase {
 
         Card save = cardRepository.save(newCard);
         return new CardResponse(save.getCardNumber(), save.getBalance());
+    }
+
+    public BigDecimal getBalance(String numeroCartao) {
+        Card card = cardRepository.findCardByCardNumber(numeroCartao)
+                .orElseThrow(() -> new CardNotFoundException("CARTAO_NAO_ENCONTRADO"));
+        return card.getBalance();
     }
 }
