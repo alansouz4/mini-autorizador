@@ -253,6 +253,9 @@ public class Card {
 
     private BigDecimal balance;
 
+    @Version
+    private Long version
+
     public BigDecimal toDebitBalance(BigDecimal amount) {
         return this.balance.subtract(amount);
     }
@@ -333,11 +336,10 @@ public void autorizarTransacao(String numeroCartao, BigDecimal valor) {
 - ### Garantia de que saldo nunca ficará negativo
   - A lógica de negócio deve impedir que o saldo seja menor que zero, mesmo em cenários concorrentes.
 ```java
-public Cartao debitar(BigDecimal valor) {
-    if (saldo.compareTo(valor) < 0) {
-        throw new IllegalStateException("SALDO_INSUFICIENTE");
+public void validBalance(BigDecimal amount) {
+    if (this.balance.compareTo(amount) < 0) {
+        throw new CardDomainException("SALDO_INSUFICIENTE");
     }
-    return new Cartao(id, numeroCartao, senha, saldo.subtract(valor), version);
 }
 ```
 
@@ -349,7 +351,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/miniautorizador?useSSL=false&serverTimezone=UTC
     username: root
-    password: root
+    password:
   jpa:
     hibernate:
       ddl-auto: update

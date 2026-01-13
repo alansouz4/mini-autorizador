@@ -27,35 +27,35 @@
 
 ### Épico 3: Autorização de Transações
 - **História 3.1**: Como usuário, quero realizar uma transação com meu cartão, para efetuar pagamentos.
-  - ✅❌ Tarefa: Implementar endpoint POST /transacoes.
-  - ✅❌ Tarefa: Validar existência do cartão (422 CARTAO_INEXISTENTE).
-  - ✅❌ Tarefa: Validar senha do cartão (422 SENHA_INVALIDA).
-  - ✅❌ Tarefa: Validar saldo disponível (422 SALDO_INSUFICIENTE).
-  - ✅❌ Tarefa: Atualizar saldo do cartão se autorizado.
-  - ✅❌ Tarefa: Retornar resposta conforme contrato.
+  - ✅ Tarefa: Implementar endpoint POST /transacoes.
+  - ✅ Tarefa: Validar existência do cartão (422 CARTAO_INEXISTENTE).
+  - ✅ Tarefa: Validar senha do cartão (422 SENHA_INVALIDA).
+  - ✅ Tarefa: Validar saldo disponível (422 SALDO_INSUFICIENTE).
+  - ✅ Tarefa: Atualizar saldo do cartão se autorizado.
+  - ✅ Tarefa: Retornar resposta conforme contrato.
     - **Story Point**: 13
 
 ### Épico 4: Testes Automatizados
 - **História 4.1**: Como desenvolvedor, quero implementar testes unitários e de integração, para garantir qualidade e cobertura.
-  - Tarefa: Criar testes para criação de cartão.
-  - Tarefa: Criar testes para consulta de saldo.
-  - Tarefa: Criar testes para transações válidas e inválidas.
-  - Tarefa: Garantir alta cobertura de código.
-  - Tarefa: Configurar relatório de cobertura (Jacoco ou similar).
+  - ✅❌ Tarefa: Criar testes para criação de cartão.
+  - ✅❌ Tarefa: Criar testes para consulta de saldo.
+  - ✅❌ Tarefa: Criar testes para transações válidas e inválidas.
+  - ✅❌ Tarefa: Garantir alta cobertura de código.
+  - ✅❌ Tarefa: Configurar relatório de cobertura (Jacoco ou similar).
     - **Story Point**: 8
 
 ### Épico 5: Documentação
 - **História 5.1**: Como avaliador, quero ler a documentação no README, para entender suposições e decisões de projeto.
-  - Tarefa: Documentar suposições (ex.: escolha do banco, autenticação).
-  - Tarefa: Documentar design patterns e boas práticas utilizadas.
-  - Tarefa: Documentar instruções de execução (docker-compose + aplicação).
-  - Tarefa: Documentar endpoints e contratos.
+  - ✅❌ Tarefa: Documentar suposições (ex.: escolha do banco, autenticação).
+  - ✅❌ Tarefa: Documentar design patterns e boas práticas utilizadas.
+  - ✅❌ Tarefa: Documentar instruções de execução (docker-compose + aplicação).
+  - ✅❌ Tarefa: Documentar endpoints e contratos.
     - **Story Point**: 5
 
 ### Épico 6: Desafios Extras (Opcional)
-- **História 6.1**: Como desenvolvedor, quero implementar a solução sem utilizar if, para explorar conceitos avançados de orientação a objetos.
+- ✅ **História 6.1**: Como desenvolvedor, quero implementar a solução sem utilizar if, para explorar conceitos avançados de orientação a objetos.
   - **Story Point**: 8
-- **História 6.2**: Como desenvolvedor, quero garantir concorrência segura em transações simultâneas, para evitar inconsistências de saldo.
+- ✅❌ **História 6.2**: Como desenvolvedor, quero garantir concorrência segura em transações simultâneas, para evitar inconsistências de saldo.
   - Tarefa: Implementar controle de concorrência (ex.: locks, transações ACID).
   - Tarefa: Testar cenários de corrida com transações simultâneas.
     - **Story Point**: 13
