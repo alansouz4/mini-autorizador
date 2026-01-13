@@ -37,13 +37,15 @@ O objetivo é construir um mini-autorizador em **Java + Spring Boot** que permit
 
 ## 🔒 Contratos REST
 ### 1. Criar novo cartão
-```bash
-curl -X POST "http://localhost:8080/cartoes" \
-  -H "Content-Type: application/json" \
-  -u username:password \
+```bash  
+  curl -X 'POST' \
+  'http://localhost:8081/v1/cards' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -u 'admin':'admin123' \
   -d '{
-    "numeroCartao": "6549873025634501",
-    "senha": "1234"
+    "cardNumber": "6549873025634501",
+    "cardPassword": "1234"
   }'
 ```
 **Responses**

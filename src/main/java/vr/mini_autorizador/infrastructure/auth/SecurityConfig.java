@@ -30,7 +30,7 @@ public class SecurityConfig {
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails admin = User.withUsername("admin")
-            .password("{noop}123")
+            .password("{noop}admin123")
             .roles("USER")
             .build();
 

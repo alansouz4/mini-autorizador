@@ -8,21 +8,21 @@
     - **Story Point**: 5
 - **História 1.2**: Como desenvolvedor, quero configurar o docker-compose com banco relacional ou não relacional, para persistir os cartões.
   - ✅ Tarefa: Validar conexão com banco relacional.
-  - ✅❌ Tarefa: Documentar no README a escolha do banco e suposições.
-  - ✅❌ Tarefa: Comentar o banco não utilizado no docker-compose.yml.
+  - ✅ Tarefa: Documentar no README a escolha do banco e suposições.
+  - ✅ Tarefa: Comentar o banco não utilizado no docker-compose.yml.
     - **Story Point**: 3
 
 ### Épico 2: Gestão de Cartões
 - **História 2.1**: Como usuário, quero criar um novo cartão com saldo inicial de R$500,00, para poder utilizá-lo em transações.
-  - Tarefa: Implementar endpoint POST /cartoes.
-  - Tarefa: Validar duplicidade de número de cartão (retornar 422).
-  - Tarefa: Persistir cartão no banco.
-  - Tarefa: Retornar resposta conforme contrato.
+  - ✅ Tarefa: Implementar endpoint POST /cartoes.
+  - ✅ Tarefa: Validar duplicidade de número de cartão (retornar 422).
+  - ✅ Tarefa: Persistir cartão no banco.
+  - ✅ Tarefa: Retornar resposta conforme contrato.
     - **Story Point**: 8
 - **História 2.2**: Como usuário, quero consultar o saldo de um cartão existente, para acompanhar meus gastos.
-  - Tarefa: Implementar endpoint GET /cartoes/{numeroCartao}.
-  - Tarefa: Validar existência do cartão (404 se não encontrado).
-  - Tarefa: Retornar saldo atual.
+  - ✅❌ Tarefa: Implementar endpoint GET /cartoes/{numeroCartao}.
+  - ✅❌ Tarefa: Validar existência do cartão (404 se não encontrado).
+  - ✅❌ Tarefa: Retornar saldo atual.
     - **Story Point**: 5
 
 ### Épico 3: Autorização de Transações
