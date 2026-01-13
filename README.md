@@ -84,7 +84,7 @@ curl -X POST "http://localhost:8080/transactions" \
   -d '{
     "cardNumber": "6549873025634501",
     "cardPassword": "1234",
-    "balance": 10.00
+    "amount": 10.00
   }'
 ```
 **Responses**

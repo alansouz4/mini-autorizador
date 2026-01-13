@@ -59,6 +59,30 @@ paths:
           description: Cartão não encontrado
         '401':
           description: Não autorizado
+  /v1/transactions:
+    post:
+      summary: Processar uma transação
+      description: Recebe uma requisição de transação e retorna status de processamento.
+      security:
+        - basicAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+      responses:
+        '201':
+          description: Transação processada com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "OK"
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
 
 components:
   securitySchemes:
@@ -90,3 +114,17 @@ components:
           type: number
           format: double
           example: 500.00
+
+    TransactionRequest:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          example: "1234567890123456"
+        cardPassword:
+          type: string
+          example: "1234"
+        amount:
+          type: number
+          format: double
+          example: 100.00
