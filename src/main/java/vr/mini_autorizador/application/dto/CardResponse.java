@@ -5,5 +5,5 @@ import tools.jackson.databind.annotation.JsonNaming;
 import java.math.BigDecimal;
 
 @JsonNaming
-public record CardResponse(String cardNumber, BigDecimal balance) {
+public record CardResponse(String cardPassword, String cardNumber) {
 }

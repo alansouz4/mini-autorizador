@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vr.mini_autorizador.application.dto.CardRequest;
 import vr.mini_autorizador.application.dto.CardResponse;
+import vr.mini_autorizador.domain.exception.CardAlreadyExistsException;
 import vr.mini_autorizador.domain.exception.CardNotFoundException;
 import vr.mini_autorizador.domain.model.Card;
 import vr.mini_autorizador.domain.repository.CardRepository;
@@ -21,7 +22,9 @@ public class CardUseCase {
 
     public CardResponse create(CardRequest request) {
         cardRepository.findCardByCardNumber(request.cardNumber())
-                .ifPresent(c -> { throw new IllegalStateException("CARTAO_JA_EXISTENTE"); });
+                .ifPresent(c -> {
+                    throw new CardAlreadyExistsException(new CardResponse(c.getCardPassword(), c.getCardNumber()));
+                });
 
         Card newCard = new Card();
         newCard.setCardNumber(request.cardNumber());
@@ -29,7 +32,7 @@ public class CardUseCase {
         newCard.setBalance(INITIAL_BALANCE);
 
         Card save = cardRepository.save(newCard);
-        return new CardResponse(save.getCardNumber(), save.getBalance());
+        return new CardResponse(save.getCardPassword(), save.getCardNumber());
     }
 
     public BigDecimal getBalance(String numeroCartao) {

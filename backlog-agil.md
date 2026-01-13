@@ -27,12 +27,12 @@
 
 ### Épico 3: Autorização de Transações
 - **História 3.1**: Como usuário, quero realizar uma transação com meu cartão, para efetuar pagamentos.
-  - Tarefa: Implementar endpoint POST /transacoes.
-  - Tarefa: Validar existência do cartão (422 CARTAO_INEXISTENTE).
-  - Tarefa: Validar senha do cartão (422 SENHA_INVALIDA).
-  - Tarefa: Validar saldo disponível (422 SALDO_INSUFICIENTE).
-  - Tarefa: Atualizar saldo do cartão se autorizado.
-  - Tarefa: Retornar resposta conforme contrato.
+  - ✅❌ Tarefa: Implementar endpoint POST /transacoes.
+  - ✅❌ Tarefa: Validar existência do cartão (422 CARTAO_INEXISTENTE).
+  - ✅❌ Tarefa: Validar senha do cartão (422 SENHA_INVALIDA).
+  - ✅❌ Tarefa: Validar saldo disponível (422 SALDO_INSUFICIENTE).
+  - ✅❌ Tarefa: Atualizar saldo do cartão se autorizado.
+  - ✅❌ Tarefa: Retornar resposta conforme contrato.
     - **Story Point**: 13
 
 ### Épico 4: Testes Automatizados
