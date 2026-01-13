@@ -235,38 +235,38 @@ src/main/java/com/vrbeneficios/miniautorizador/domain
     - Expõe comportamentos: debitar(valor), validarSenha(senha).
     - Exemplo com record:
 ```java
-import jakarta.persistence.*;
-import java.math.BigDecimal;
-
 @Entity
-@Table(name = "cartao")
-public record Cartao(
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id,
+    private Long id;
 
-    @Column(unique = true, nullable = false)
-    String numeroCartao,
+    @Column(name = "card_number")
+    private String cardNumber;
 
-    @Column(nullable = false)
-    String senha,
+    @Column(name = "card_password")
+    private String cardPassword;
 
-    @Column(nullable = false)
-    BigDecimal saldo,
+    private BigDecimal balance;
 
-    @Version
-    Long version
-) {
-
-    public Cartao debitar(BigDecimal valor) {
-        if (saldo.compareTo(valor) < 0) {
-        throw new IllegalStateException("SALDO_INSUFICIENTE");
+    public BigDecimal toDebitBalance(BigDecimal amount) {
+        return this.balance.subtract(amount);
     }
-    return new Cartao(id, numeroCartao, senha, saldo.subtract(valor), version);
-}
 
-    public boolean validarSenha(String senhaInformada) {
-        return this.senha.equals(senhaInformada);
+    public void validBalance(BigDecimal amount) {
+        if (this.balance.compareTo(amount) < 0) {
+            throw new CardDomainException("SALDO_INSUFICIENTE");
+        }
+    }
+
+    public void validPassword(String cardPassword) {
+        if(!this.cardPassword.equals(cardPassword)) {
+            throw new CardDomainException("SENHA_INVALIDA");
+        }
     }
 }
 ```

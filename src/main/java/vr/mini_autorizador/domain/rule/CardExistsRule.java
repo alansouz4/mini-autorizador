@@ -4,17 +4,18 @@ import org.springframework.stereotype.Component;
 import vr.mini_autorizador.domain.model.Card;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
- * Regra: Valida se o cartão possui saldo suficiente
- * Terceira regra na cadeia de autorização
+ * Regra: Valida se o cartão existe
+ * Primeira regra na cadeia de autorização
  */
 @Component
-public class SufficientBalanceRule extends BaseAuthorizationRule {
+public class CardExistsRule extends BaseAuthorizationRule {
     
     @Override
     public void validate(Card card, String password, BigDecimal amount) {
-        // Delega validação para o próprio cartão (domain model)
-        card.validBalance(amount);
+        // Usa Objects.requireNonNull para evitar if
+        Objects.requireNonNull(card, "CARTAO_INEXISTENTE");
     }
 }

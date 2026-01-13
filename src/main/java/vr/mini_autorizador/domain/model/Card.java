@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import vr.mini_autorizador.domain.exception.CardDomainException;
 
 import java.math.BigDecimal;
 
@@ -25,4 +26,20 @@ public class Card {
     private String cardPassword;
 
     private BigDecimal balance;
+
+    public BigDecimal toDebitBalance(BigDecimal amount) {
+        return this.balance.subtract(amount);
+    }
+
+    public void validBalance(BigDecimal amount) {
+        if (this.balance.compareTo(amount) < 0) {
+            throw new CardDomainException("SALDO_INSUFICIENTE");
+        }
+    }
+
+    public void validPassword(String cardPassword) {
+        if(!this.cardPassword.equals(cardPassword)) {
+            throw new CardDomainException("SENHA_INVALIDA");
+        }
+    }
 }
