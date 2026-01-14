@@ -49,7 +49,7 @@
   - ✅ Tarefa: Documentar suposições (ex.: escolha do banco, autenticação).
   - ✅ Tarefa: Documentar design patterns e boas práticas utilizadas.
   - ✅ Tarefa: Documentar instruções de execução (docker-compose + aplicação).
-  - ✅❌ Tarefa: Documentar endpoints e contratos.
+  - ✅ Tarefa: Documentar endpoints e contratos.
     - **Story Point**: 5
 
 ### Épico 6: Desafios Extras (Opcional)

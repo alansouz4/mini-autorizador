@@ -297,8 +297,8 @@ Para evitar problemas em transações simultâneas:
 ```java
 @Transactional
 @Retryable(
-        retryFor = OptimisticLockException.class,
-        maxAttempts = 3,
+        retryFor = {OptimisticLockException.class, OptimisticLockingFailureException.class},
+        maxAttempts = 5,
         backoff = @Backoff(delay = 100, multiplier = 2)
 )
 public void process(TransactionRequest request) {
@@ -341,24 +341,7 @@ spring:
 ## 🧪 Testes
 - ### Unitários: regras de negócio e invariantes
   - Teste de regras de negócio isoladas
-  - Teste de invariantes
 
-- ### Integração: endpoints REST e persistência
-  - Teste de persistência com banco em memória (H2) ou Testcontainers (MySQL real).
-  - Teste de endpoints REST com MockMvc
-```java
-@Autowired
-private MockMvc mockMvc;
-
-@Test
-void deveCriarCartaoComSucesso() throws Exception {
-    mockMvc.perform(post("/cartoes")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content("{\"numeroCartao\":\"6549873025634501\",\"senha\":\"1234\"}"))
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.numeroCartao").value("6549873025634501"));
-}
-```
 - ### Concorrência: simulação de transações simultâneas
   - Simulação de transações concorrentes.
 
