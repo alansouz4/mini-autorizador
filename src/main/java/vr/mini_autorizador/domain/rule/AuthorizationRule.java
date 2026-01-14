@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 
 /**
  * Strategy Pattern: Interface para regras de autorização
- * Cada regra implementa sua própria lógica de validação
  */
 public interface AuthorizationRule {
 
@@ -20,8 +19,7 @@ public interface AuthorizationRule {
     void validate(Card card, String password, BigDecimal amount);
 
     /**
-     * Define a próxima regra na cadeia (Chain of Responsibility)
-     * @param next Próxima regra a ser executada
+     * Define a próxima regra na cadeia
      */
     void setNext(AuthorizationRule next);
 

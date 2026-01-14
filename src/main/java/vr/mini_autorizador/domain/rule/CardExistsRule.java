@@ -15,7 +15,6 @@ public class CardExistsRule extends BaseAuthorizationRule {
     
     @Override
     public void validate(Card card, String password, BigDecimal amount) {
-        // Usa Objects.requireNonNull para evitar if
         Objects.requireNonNull(card, "CARTAO_INEXISTENTE");
     }
 }

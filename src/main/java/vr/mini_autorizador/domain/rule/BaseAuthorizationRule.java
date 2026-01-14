@@ -3,6 +3,7 @@ package vr.mini_autorizador.domain.rule;
 import vr.mini_autorizador.domain.model.Card;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 /**
  * Classe base abstrata para regras de autorização
@@ -21,9 +22,9 @@ public abstract class BaseAuthorizationRule implements AuthorizationRule {
     public void validateAndNext(Card card, String password, BigDecimal amount) {
         validate(card, password, amount);
 
-        // Chain of Responsibility: passa para a próxima regra
+        // Passa para a próxima regra
         // Usa Optional para evitar if
-        java.util.Optional.ofNullable(next)
+        Optional.ofNullable(next)
                 .ifPresent(rule -> rule.validateAndNext(card, password, amount));
     }
 }

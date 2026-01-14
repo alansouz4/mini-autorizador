@@ -15,12 +15,6 @@ import java.math.BigDecimal;
 /**
  * Serviço de Domínio: AutorizacaoService
  *
- * Responsabilidades:
- * - Orquestrar regras de autorização que não pertencem a uma única entidade
- * - Aplicar Chain of Responsibility para executar regras em sequência
- * - Interagir com CardRepository (Porta) para buscar e atualizar cartões
- * - Processar transações autorizadas
- *
  * Padrões aplicados:
  * - Strategy Pattern: Cada regra é uma estratégia de validação
  * - Chain of Responsibility: Regras são encadeadas e executadas em sequência
@@ -49,31 +43,16 @@ public class AuthorizationService {
         this.authorizationChain = cardExistsRule;
     }
 
-    /**
-     * Autoriza uma transação aplicando todas as regras de negócio
-     *
-     * @param cardNumber Número do cartão
-     * @param password Senha informada
-     * @param amount Valor da transação
-     * @return Card autorizado para transação
-     * @throws CardDomainException se alguma regra falhar
-     */
     public Card authorizer(String cardNumber, String password, BigDecimal amount) {
         Card card = cardRepository.findCardByCardNumber(cardNumber)
                 .orElseThrow(() -> new CardDomainException("CARTAO_INEXISTENTE"));
         
-        // Executa a cadeia de regras (sem ifs!)
+        // Executa a cadeia de regras
         authorizationChain.validateAndNext(card, password, amount);
         
         return card;
     }
 
-    /**
-     * Processa uma transação autorizada, debitando o valor do saldo
-     *
-     * @param card Cartão autorizado
-     * @param amount Valor a ser debitado
-     */
     public void processorTransaction(Card card, BigDecimal amount) {
         // Atualiza o saldo (domain model)
         BigDecimal newBalance = card.toDebitBalance(amount);

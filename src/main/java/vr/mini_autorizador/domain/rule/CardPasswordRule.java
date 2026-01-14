@@ -14,7 +14,6 @@ public class CardPasswordRule extends BaseAuthorizationRule {
     
     @Override
     public void validate(Card card, String password, BigDecimal amount) {
-        // Delega validação para o próprio cartão (domain model)
         card.validPassword(password);
     }
 }
