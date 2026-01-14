@@ -27,6 +27,9 @@ public class Card {
 
     private BigDecimal balance;
 
+    @Version
+    private Long version;
+
     public BigDecimal toDebitBalance(BigDecimal amount) {
         return this.balance.subtract(amount);
     }

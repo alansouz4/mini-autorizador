@@ -46,16 +46,16 @@
 
 ### Épico 5: Documentação
 - **História 5.1**: Como avaliador, quero ler a documentação no README, para entender suposições e decisões de projeto.
-  - ✅❌ Tarefa: Documentar suposições (ex.: escolha do banco, autenticação).
-  - ✅❌ Tarefa: Documentar design patterns e boas práticas utilizadas.
-  - ✅❌ Tarefa: Documentar instruções de execução (docker-compose + aplicação).
+  - ✅ Tarefa: Documentar suposições (ex.: escolha do banco, autenticação).
+  - ✅ Tarefa: Documentar design patterns e boas práticas utilizadas.
+  - ✅ Tarefa: Documentar instruções de execução (docker-compose + aplicação).
   - ✅❌ Tarefa: Documentar endpoints e contratos.
     - **Story Point**: 5
 
 ### Épico 6: Desafios Extras (Opcional)
 - ✅ **História 6.1**: Como desenvolvedor, quero implementar a solução sem utilizar if, para explorar conceitos avançados de orientação a objetos.
   - **Story Point**: 8
-- ✅❌ **História 6.2**: Como desenvolvedor, quero garantir concorrência segura em transações simultâneas, para evitar inconsistências de saldo.
+- ✅ **História 6.2**: Como desenvolvedor, quero garantir concorrência segura em transações simultâneas, para evitar inconsistências de saldo.
   - Tarefa: Implementar controle de concorrência (ex.: locks, transações ACID).
   - Tarefa: Testar cenários de corrida com transações simultâneas.
     - **Story Point**: 13

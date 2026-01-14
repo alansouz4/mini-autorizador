@@ -76,6 +76,21 @@
             <version>7.15.0</version>
         </dependency>
 
+        <!-- Spring Retry (para retry em caso de OptimisticLockException) -->
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+            <version>2.0.12</version>
+        </dependency>
+
+        <!-- - AOP (Aspect-Oriented Programming) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>4.3.30.RELEASE</version> <!-- versão final do Spring 4.x -->
+        </dependency>
+
+        <!-- Swagger -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>

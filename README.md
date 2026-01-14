@@ -80,11 +80,11 @@ curl -X GET "http://localhost:8080/v1/cards/6549873025634501" \
 ```bash
 curl -X POST "http://localhost:8080/transactions" \
   -H "Content-Type: application/json" \
-  -u username:password \
+  -u 'admin':'admin123' \
   -d '{
     "cardNumber": "6549873025634501",
     "cardPassword": "1234",
-    "amount": 10.00
+    "amount": 100.00
   }'
 ```
 **Responses**
@@ -306,32 +306,26 @@ Para evitar problemas em transações simultâneas:
   - Uso: campo @Version em Cartao para garantir que duas transações não debitem além do saldo.
   - Benefício: segurança em cenários concorrentes sem travar o banco.
   - Saber mais: https://chroniclesofapragmaticprogrammer.substack.com/p/optimistic-locking
+
 - ### Retry em caso de conflito
   - Se uma transação falhar por conflito de versão, você pode tentar novamente até que seja bem-sucedida.
   - Benefício: 
       - Permite que operações concorrentes sejam resolvidas sem falhar imediatamente.
 ```java
-public void autorizarTransacao(String numeroCartao, BigDecimal valor) {
-    int tentativas = 0;
-    boolean sucesso = false;
-
-    while (!sucesso && tentativas < 3) {
-        try {
-            Cartao cartao = cartaoRepository.findByNumeroCartao(numeroCartao)
-                    .orElseThrow(() -> new IllegalStateException("CARTAO_INEXISTENTE"));
-
-            Cartao atualizado = cartao.debitar(valor);
-            cartaoRepository.save(atualizado);
-
-            sucesso = true;
-        } catch (OptimisticLockException e) {
-            tentativas++;
-            if (tentativas == 3) {
-                throw new IllegalStateException("CONCORRENCIA_DEBITO_FALHOU");
-            }
-        }
+@Transactional
+@Retryable(
+            retryFor = OptimisticLockException.class,
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 100, multiplier = 2)
+    )
+    public void process(TransactionRequest request) {
+        Card authorizedCard = authorizationService.authorizer(
+                request.cardNumber(),
+                request.cardPassword(),
+                request.amount()
+        );
+        authorizationService.processorTransaction(authorizedCard, request.amount());
     }
-}
 ```
 - ### Garantia de que saldo nunca ficará negativo
   - A lógica de negócio deve impedir que o saldo seja menor que zero, mesmo em cenários concorrentes.
@@ -359,19 +353,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-```
-- ### ACID, atomicidade no débito de saldo
-  - Garantido pelo uso de transações JPA e optimistic locking com @Version.
-  - Exemplo de update seguro:
-```java
-@Transactional
-public void debitar(String numeroCartao, BigDecimal valor) {
-    Cartao cartao = cartaoRepository.findByNumeroCartao(numeroCartao)
-        .orElseThrow(() -> new IllegalStateException("CARTAO_INEXISTENTE"));
-
-    Cartao atualizado = cartao.debitar(valor);
-    cartaoRepository.save(atualizado);
-}
 ```
 
 ## 🧪 Testes
