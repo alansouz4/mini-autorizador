@@ -340,24 +340,9 @@ spring:
 
 ## 🧪 Testes
 - ### Unitários: regras de negócio e invariantes
-  - Teste de regras de negócio isoladas:
-```java
-@Test
-void deveDebitarSaldoCorretamente() {
-    Cartao cartao = new Cartao(1L, "123456789", "1234", new BigDecimal("500.00"), 0L);
-    Cartao atualizado = cartao.debitar(new BigDecimal("100.00"));
-    assertEquals(new BigDecimal("400.00"), atualizado.saldo());
-}
-```  
-  -
-    - Teste de invariantes:
-```java
-@Test
-void deveFalharAoDebitarSaldoInsuficiente() {
-    Cartao cartao = new Cartao(1L, "123456789", "1234", new BigDecimal("500.00"), 0L);
-    assertThrows(IllegalStateException.class, () -> cartao.debitar(new BigDecimal("600.00")));
-}
-```
+  - Teste de regras de negócio isoladas
+  - Teste de invariantes
+
 - ### Integração: endpoints REST e persistência
   - Teste de persistência com banco em memória (H2) ou Testcontainers (MySQL real).
   - Teste de endpoints REST com MockMvc
@@ -375,44 +360,8 @@ void deveCriarCartaoComSucesso() throws Exception {
 }
 ```
 - ### Concorrência: simulação de transações simultâneas
-  - Simulação de transações concorrentes:
+  - Simulação de transações concorrentes.
 
-```java
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class TransacaoConcorrenteTest {
-    @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Test
-    void deveAutorizarTransacaoConcorrente() {
-        // Criação de cartão
-        Cartao cartao = new Cartao(1L, "123456789", "1234", new BigDecimal("500.00"), 0L);
-        cartaoRepository.save(cartao);
-
-        // Simulação de transações concorrentes
-        List<Callable<Void>> tasks = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            tasks.add(() -> {
-                restTemplate.postForEntity("http://localhost:8080/autorizar", 
-                        new Transacao("123456789", "1234", new BigDecimal("100.00")), Void.class);
-                return null;
-            });
-        }
-
-        // Execução das tarefas
-        ExecutorService executor = Executors.newFixedThreadPool(10);
-        try {
-            executor.invokeAll(tasks);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
-        // Verificação do saldo final
-        Cartao cartaoAtualizado = cartaoRepository.findByNumeroCartao("123456789");
-        assertEquals(new BigDecimal("400.00"), cartaoAtualizado.getSaldo());
-    }
-}
-```
 - ### Cobertura: alta cobertura, testes validando comportamento real
   - Jacoco → gera relatórios de cobertura automaticamente durante o build Maven.
   - SonarQube → analisa qualidade do código e integra com Jacoco para exibir métricas detalhadas.
@@ -463,16 +412,19 @@ public class TransacaoConcorrenteTest {
 
 - No application.properties ou sonar-project.properties:
 ```properties
-sonar.projectKey=mini-autorizador
-sonar.host.url=http://localhost:9000
-sonar.login=seu-token-sonar
+sonar:
+  projectKey: mini-autorizador
+  host.url: http://localhost:9000
+  login: squ_6e4249777aa58a4a0e57e9827166a399f26ca46c
 ```
 
 - Rodar análise:
 ```bash
 mvn clean verify sonar:sonar
 ```
-
+## 🎯 Meta de cobertura
+- Domínio e serviços: cobertura mínima de 80%.
+- Testes reais: validação de comportamento de regras de negócio e concorrência, não apenas mocks.
 ---
 
 ## 📦 Como rodar

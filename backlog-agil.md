@@ -39,9 +39,9 @@
 - **História 4.1**: Como desenvolvedor, quero implementar testes unitários e de integração, para garantir qualidade e cobertura.
   - ✅ Tarefa: Criar testes para criação de cartão.
   - ✅ Tarefa: Criar testes para consulta de saldo.
-  - ✅❌ Tarefa: Criar testes para transações válidas e inválidas.
-  - ✅❌ Tarefa: Garantir alta cobertura de código.
-  - ✅❌ Tarefa: Configurar relatório de cobertura (Jacoco ou similar).
+  - ✅ Tarefa: Criar testes para transações válidas e inválidas.
+  - ✅ Tarefa: Garantir alta cobertura de código.
+  - ✅ Tarefa: Configurar relatório de cobertura (Jacoco ou similar).
     - **Story Point**: 8
 
 ### Épico 5: Documentação

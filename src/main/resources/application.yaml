@@ -12,3 +12,9 @@ spring:
       properties:
         hibernate:
           dialect: org.hibernate.dialect.MySQL8Dialect
+
+sonar:
+  projectKey: mini-autorizador
+  host:
+    url: http://localhost:9000
+  login: squ_6e4249777aa58a4a0e57e9827166a399f26ca46c
