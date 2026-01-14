@@ -155,24 +155,6 @@ public class SecurityConfig {
     /auth
       SecurityConfig.java       // configuração técnica
 ```
-### 🧾 Exemplo de requisição
-1. Gerando o token
-   - Se o usuário for admin e a senha 123, a string é: ``admin:123``
-   - Codificada em Base64: ``YWRtaW46MTIz``
-
-2. Usando no cabeçalho HTTP
-   ``GET /api/contas HTTP/1.1
-   Host: localhost:8080
-   Authorization: Basic YWRtaW46MTIz``
-
-3. Exemplo com curl
-   ``curl -X GET "http://localhost:8080/api/contas" \
-   -H "Authorization: Basic YWRtaW46MTIz"``
-
-✅ Resumindo
-- Cabeçalho: Authorization: Basic <Base64(username:password)>
-- Exemplo: Authorization: Basic YWRtaW46MTIz
-- Uso: Protege endpoints do mini-autorizador garantindo que apenas usuários autenticados acessem os recursos.
 
 ---
 
@@ -301,6 +283,7 @@ public class Card {
 
 ## ⚙️ Concorrência
 Para evitar problemas em transações simultâneas:
+
 - ### Lock otimista com versão do agregado
   - O que é: usa versão do registro para evitar concorrência.
   - Uso: campo @Version em Cartao para garantir que duas transações não debitem além do saldo.
@@ -314,18 +297,18 @@ Para evitar problemas em transações simultâneas:
 ```java
 @Transactional
 @Retryable(
-            retryFor = OptimisticLockException.class,
-            maxAttempts = 3,
-            backoff = @Backoff(delay = 100, multiplier = 2)
-    )
-    public void process(TransactionRequest request) {
-        Card authorizedCard = authorizationService.authorizer(
-                request.cardNumber(),
-                request.cardPassword(),
-                request.amount()
-        );
-        authorizationService.processorTransaction(authorizedCard, request.amount());
-    }
+        retryFor = OptimisticLockException.class,
+        maxAttempts = 3,
+        backoff = @Backoff(delay = 100, multiplier = 2)
+)
+public void process(TransactionRequest request) {
+    Card authorizedCard = authorizationService.authorizer(
+            request.cardNumber(),
+            request.cardPassword(),
+            request.amount()
+    );
+    authorizationService.processorTransaction(authorizedCard, request.amount());
+}
 ```
 - ### Garantia de que saldo nunca ficará negativo
   - A lógica de negócio deve impedir que o saldo seja menor que zero, mesmo em cenários concorrentes.
@@ -492,14 +475,6 @@ mvn clean verify sonar:sonar
 
 ---
 
-### 🎯 Meta de cobertura
-- Domínio e serviços: cobertura mínima de 80%.
-- Testes reais: validação de comportamento de regras de negócio e concorrência, não apenas mocks.
-- Exemplo de relatório Jacoco:
-- Cartao.debitar() → 100% coberto.
-- AutorizacaoService.autorizar() → 95% coberto.
-- Controllers REST → cobertos via testes de integração.
-
 ## 📦 Como rodar
 ### Clone o repositório
 ```bash
@@ -517,12 +492,6 @@ mvn spring-boot:run
 ```
 
 ### Acesse os endpoints em: ``` http://localhost:8080 ```
-
-## 🔮 Próximos passos (opcionais)
-- Implementar idempotência em transações
-- Adicionar auditoria e logs estruturados
-- Observabilidade com métricas e tracing
-- Testes de carga com K6/Gatling
 
 ## 👨‍💻 Autor
 Desenvolvido por [alansouz4](https://github.com/alansouz4) como parte do processo seletivo da VR Benefícios. 
