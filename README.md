@@ -39,21 +39,21 @@ O objetivo é construir um mini-autorizador em **Java + Spring Boot** que permit
 ### 1. Criar novo cartão
 ```bash  
   curl -X 'POST' \
-  'http://localhost:8080/v1/cards' \
+  'http://localhost:8080/cartoes' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -u 'admin':'admin123' \
   -d '{
-    "cardNumber": "6549873025634501",
-    "cardPassword": "1234"
+    "numeroCartao": "6549873025634501",
+    "senha": "1234"
   }'
 ```
 **Responses**
 - 201 Created
 ```json
 {
-  "cardPassword": "1234",
-  "cardNumber": "6549873025634501"
+  "senha": "1234",
+  "numeroCartao": "6549873025634501"
 }
 ```
 - 422 Unprocessable Entity → cartão já existe
@@ -61,30 +61,28 @@ O objetivo é construir um mini-autorizador em **Java + Spring Boot** que permit
 
 ### 2. Obter saldo do cartão
 ```bash
-curl -X GET "http://localhost:8080/v1/cards/6549873025634501" \
+curl -X GET "http://localhost:8080/cartoes/6549873025634501" \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -u 'admin':'admin123'
 ```
 **Responses**
 - 200 OK
-```json
-{
-  "balance": 500.0
-}
+```
+500.0
 ```
 - 404 Not Found → cartão não existe
 - 401 Unauthorized → erro de autenticação
 
 ### 3. Realizar uma transação
 ```bash
-curl -X POST "http://localhost:8080/transactions" \
+curl -X POST "http://localhost:8080/transacoes" \
   -H "Content-Type: application/json" \
   -u 'admin':'admin123' \
   -d '{
-    "cardNumber": "6549873025634501",
-    "cardPassword": "1234",
-    "amount": 100.00
+    "numeroCartao": "6549873025634501",
+    "senha": "1234",
+    "valor": 100.00
   }'
 ```
 **Responses**
@@ -145,12 +143,7 @@ public class SecurityConfig {
 ```
 /src
   /domain
-    /model
-    /service
-    /ports
-      AuthenticationPort.java   // contrato
   /application
-    LoginUseCase.java           // caso de uso
   /infrastructure
     /auth
       SecurityConfig.java       // configuração técnica
@@ -236,7 +229,7 @@ public class Card {
     private BigDecimal balance;
 
     @Version
-    private Long version
+    private Long version;
 
     public BigDecimal toDebitBalance(BigDecimal amount) {
         return this.balance.subtract(amount);

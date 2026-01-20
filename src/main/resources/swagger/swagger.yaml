@@ -11,10 +11,10 @@ security:
   - basicAuth: []   # aplica autenticação globalmente
 
 paths:
-  /v1/cards:
+  /cartoes:
     post:
       summary: Criar um novo cartão
-      description: Cria um cartão com número e senha, retornando os dados do cartão.
+      description: Cria um cartão com número e cardPassword, retornando os dados do cartão.
       security:
         - basicAuth: []
       requestBody:
@@ -35,14 +35,14 @@ paths:
         '401':
           description: Não autorizado
 
-  /v1/cards/{cardNumber}:
+  /cartoes/{numeroCartao}:
     get:
       summary: Consultar saldo do cartão
       description: Retorna o saldo atual de um cartão pelo número.
       security:
         - basicAuth: []
       parameters:
-        - name: cardNumber
+        - name: numeroCartao
           in: path
           required: true
           schema:
@@ -59,7 +59,7 @@ paths:
           description: Cartão não encontrado
         '401':
           description: Não autorizado
-  /v1/transactions:
+  /transacoes:
     post:
       summary: Processar uma transação
       description: Recebe uma requisição de transação e retorna status de processamento.
@@ -94,23 +94,23 @@ components:
     CardRequest:
       type: object
       properties:
-        cardNumber:
+        numeroCartao:
           type: string
           example: "1234567890123456"
-        cardPassword:
+        senha:
           type: string
           example: "1234"
 
     CardResponse:
       type: object
       properties:
-        cardNumber:
+        numeroCartao:
           type: string
           example: "1234567890123456"
-        cardPassword:
+        senha:
           type: string
           example: "1234"
-        balance:
+        saldo:
           type: number
           format: double
           example: 500.00
@@ -118,13 +118,13 @@ components:
     TransactionRequest:
       type: object
       properties:
-        cardNumber:
+        numeroCartao:
           type: string
           example: "1234567890123456"
-        cardPassword:
+        senha:
           type: string
           example: "1234"
-        amount:
+        valor:
           type: number
           format: double
           example: 100.00

@@ -10,7 +10,7 @@ import vr.mini_autorizador.application.usecase.CardUseCase;
 import java.math.BigDecimal;
 
 @RestController
-@RequestMapping("/v1/cards")
+@RequestMapping("/cartoes")
 public class CardController {
 
     @Autowired
@@ -22,8 +22,8 @@ public class CardController {
         return ResponseEntity.status(201).body(cardResponse);
     }
 
-    @GetMapping("/{cardNumber}")
-    public ResponseEntity<BigDecimal> getBalance(@PathVariable String cardNumber) {
+    @GetMapping("/{numeroCartao}")
+    public ResponseEntity<BigDecimal> getBalance(@PathVariable("numeroCartao") String cardNumber) {
         BigDecimal balance = useCase.getBalance(cardNumber);
         return ResponseEntity.ok(balance);
     }

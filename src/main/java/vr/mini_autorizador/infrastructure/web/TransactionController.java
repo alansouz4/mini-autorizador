@@ -10,7 +10,7 @@ import vr.mini_autorizador.application.dto.TransactionRequest;
 import vr.mini_autorizador.application.usecase.TransactionUseCase;
 
 @RestController
-@RequestMapping("/v1/transactions")
+@RequestMapping("/transacoes")
 public class TransactionController {
 
     @Autowired

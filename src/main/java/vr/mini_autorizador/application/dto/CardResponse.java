@@ -1,4 +1,10 @@
 package vr.mini_autorizador.application.dto;
 
-public record CardResponse(String cardPassword, String cardNumber) {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record CardResponse(
+        @JsonProperty("cardPassword")
+        String cardPassword,
+        @JsonProperty("cardNumber")
+        String cardNumber) {
 }
