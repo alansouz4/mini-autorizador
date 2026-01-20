@@ -11,7 +11,9 @@ O objetivo é construir um mini-autorizador em **Java + Spring Boot** que permit
 - **Persistência:** Spring Data JPA.
 - **Migrações:** Flyway/Liquibase.
 - **Segurança:** Spring Security (Basic Auth).
-- **Testes:** JUnit 5, Mockito, Testcontainers.
+- **Concorrência:** Spring Boot + Jakarta + Spring Retry.
+- **Testes:** JUnit 5, Mockito.
+- **Qualidade:** SonarQube, Jacoco.
 
 ---
 
@@ -99,9 +101,9 @@ OK
 
 ---
 ## 🔐 Autenticação com Basic Auth (Spring Boot 4 / Spring Security 6)
-O projeto mini-autorizador utiliza Basic Authentication para proteger suas rotas.
+- O projeto mini-autorizador utiliza Basic Authentication para proteger suas rotas.
 Esse mecanismo é simples e baseado em enviar as credenciais (usuário e senha) no cabeçalho da requisição HTTP.
-A configuração é feita através de um bean SecurityFilterChain, que define quais endpoints exigem autenticação e quais são públicos.
+- A configuração é feita através de um bean ```SecurityFilterChain```, que define quais endpoints exigem autenticação e quais são públicos.
 
 
 ### 📌 Como funciona
@@ -206,9 +208,9 @@ src/main/java/com/vrbeneficios/miniautorizador/domain
   - A Entidade representa o núcleo do negócio.
     - Tem identidade (numeroCartao) única.
     - Possui atributos relevantes: senha, saldo, versão (para concorrência).
-    - Contém invariantes: saldo ≥ 0, senha não nula.
+    - Contém invariantes: saldo ≥ 0, senha válida.
     - Expõe comportamentos: debitar(valor), validarSenha(senha).
-    - Exemplo com record:
+    - Exemplo com class:
 ```java
 @Entity
 @Getter
@@ -250,9 +252,9 @@ public class Card {
 ```
 - ### Serviço de domínio: AutorizacaoService
   - O Serviço de Domínio orquestra regras que não pertencem a uma única entidade.
-    - Aplica as regras de autorização (existência, senha, saldo).
-    - Usa Strategy + Chain of Responsibility para evitar ifs.
-    - Interage com o CartaoRepository (Porta) para buscar e atualizar cartões.
+  - Aplica as regras de autorização (existência, senha, saldo).
+  - Usa Strategy + Chain of Responsibility com foco em um sistema flexível e escalável.
+  - Interage com o CartaoRepository (Porta) para buscar e atualizar cartões.
 
 - ### Design Patterns:
   - Strategy 
@@ -341,63 +343,16 @@ spring:
 - ### Cobertura: alta cobertura, testes validando comportamento real
   - Jacoco → gera relatórios de cobertura automaticamente durante o build Maven.
   - SonarQube → analisa qualidade do código e integra com Jacoco para exibir métricas detalhadas.
-> 📦 Jacoco no pom.xml
-> 👉 Gera relatórios em target/site/jacoco/index.html
 
-```xml
-<build>
-  <plugins>
-    <!-- Plugin do Spring Boot -->
-    <plugin>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-maven-plugin</artifactId>
-    </plugin>
+> 📦 Jacoco
+  - Execute o comando: ```mvn clean verify```
+  - Abrir relatório index.html no browser encontrado no: ```target/site/jacoco/index.html```
 
-    <!-- Jacoco para cobertura -->
-    <plugin>
-      <groupId>org.jacoco</groupId>
-      <artifactId>jacoco-maven-plugin</artifactId>
-      <version>0.8.10</version>
-      <executions>
-        <execution>
-          <goals>
-            <goal>prepare-agent</goal>
-          </goals>
-        </execution>
-        <execution>
-          <id>report</id>
-          <phase>verify</phase>
-          <goals>
-            <goal>report</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
-</build>
-```
-> 📊 SonarQube  No pom.xml
+> 📊 Rodar SonarQube
+  - Subir serviço com no docker: ```docker run -d --name sonarqube -p 9000:9000 sonarqube:lts-community```
+  - Execute o comando:  ```mvn clean verify sonar:sonar```
+  - Acesse:```http://localhost:9000```
 
-```xml
-<plugin>
-  <groupId>org.sonarsource.scanner.maven</groupId>
-  <artifactId>sonar-maven-plugin</artifactId>
-  <version>3.9.1.2184</version>
-</plugin>
-```
-
-- No application.properties ou sonar-project.properties:
-```properties
-sonar:
-  projectKey: mini-autorizador
-  host.url: http://localhost:9000
-  login: squ_6e4249777aa58a4a0e57e9827166a399f26ca46c
-```
-
-- Rodar análise:
-```bash
-mvn clean verify sonar:sonar
-```
 ## 🎯 Meta de cobertura
 - Domínio e serviços: cobertura mínima de 80%.
 - Testes reais: validação de comportamento de regras de negócio e concorrência, não apenas mocks.
@@ -408,6 +363,7 @@ mvn clean verify sonar:sonar
 ```bash
 git clone https://github.com/seu-usuario/mini-autorizador.git
 cd mini-autorizador
+git checkout develop
 ```
 ### Suba os bancos com Docker Compose
 ```bash
@@ -418,8 +374,10 @@ docker-compose up -d
 ```bash
 mvn spring-boot:run
 ```
-
-### Acesse os endpoints em: ``` http://localhost:8080 ```
+### Acesse os endpoints em: 
+```bash
+http://localhost:8080
+```
 
 ## 👨‍💻 Autor
 Desenvolvido por [alansouz4](https://github.com/alansouz4) como parte do processo seletivo da VR Benefícios. 

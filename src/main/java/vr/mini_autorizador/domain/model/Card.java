@@ -45,4 +45,10 @@ public class Card {
             throw new CardDomainException("SENHA_INVALIDA");
         }
     }
+
+    public void validCardExists() {
+        if(this.id == null) {
+            throw new CardDomainException("CARTAO_INEXISTENTE");
+        }
+    }
 }

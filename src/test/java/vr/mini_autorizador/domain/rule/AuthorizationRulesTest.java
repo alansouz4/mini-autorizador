@@ -63,6 +63,7 @@ class AuthorizationRulesTest {
     @DisplayName("Deve validar existência do cartão com sucesso")
     void shouldValidateCardExistenceSuccessfully() {
         Card card = new Card();
+        card.setId(1L);
         CardExistsRule rule = new CardExistsRule();
 
         assertDoesNotThrow(() -> rule.validate(card, "any", BigDecimal.ZERO));

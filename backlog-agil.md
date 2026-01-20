@@ -24,6 +24,8 @@
   - ✅ Tarefa: Validar existência do cartão (404 se não encontrado).
   - ✅ Tarefa: Retornar saldo atual.
     - **Story Point**: 5
+- **História 2.3**: Ajuste necessário para atender o contrato da API.
+  - ✅ Fix: Ajustar path endpoints.
 
 ### Épico 3: Autorização de Transações
 - **História 3.1**: Como usuário, quero realizar uma transação com meu cartão, para efetuar pagamentos.
@@ -33,7 +35,10 @@
   - ✅ Tarefa: Validar saldo disponível (422 SALDO_INSUFICIENTE).
   - ✅ Tarefa: Atualizar saldo do cartão se autorizado.
   - ✅ Tarefa: Retornar resposta conforme contrato.
+  - ✅ Tarefa: Retornar resposta conforme contrato.
     - **Story Point**: 13
+- **Tarefa 3.2**: Ajustar testes da classe AuthorizationService para validar regras de domínio.
+    - ✅ Test: Ajustar e validar testes.
 
 ### Épico 4: Testes Automatizados
 - **História 4.1**: Como desenvolvedor, quero implementar testes unitários e de integração, para garantir qualidade e cobertura.
@@ -60,7 +65,7 @@
   - Tarefa: Testar cenários de corrida com transações simultâneas.
     - **Story Point**: 13
 
-**Total Story Point**:
+  **Total Story Point**:
 - Sem extras: 47
 - Com extras: 68
 
