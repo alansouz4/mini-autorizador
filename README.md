@@ -1,6 +1,5 @@
-# Mini Autorizador - VR Benefícios
-
-Este projeto é parte de um teste técnico para a VR Benefícios.  
+# Mini Autorizador
+ 
 O objetivo é construir um mini-autorizador em **Java + Spring Boot** que permita criar cartões, consultar saldo e autorizar transações de forma simples e segura.
 
 ---
