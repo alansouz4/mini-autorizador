@@ -12,7 +12,7 @@
 	<artifactId>mini-autorizador</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mini-autorizador</name>
-	<description>Projeto para atender desafio técnico da VR Benefícios</description>
+	<description>Projeto para atender autorização e transações do cartão</description>
 	<url/>
 	<licenses>
 		<license/>
