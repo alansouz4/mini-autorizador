@@ -1,0 +1,130 @@
+openapi: 3.0.0
+info:
+  title: Mini Autorizador API
+  version: 1.0.0
+  description: API para criação de cartões e consulta de saldo, protegida com Basic Auth
+
+servers:
+  - url: http://localhost:8080
+
+security:
+  - basicAuth: []   # aplica autenticação globalmente
+
+paths:
+  /cartoes:
+    post:
+      summary: Criar um novo cartão
+      description: Cria um cartão com número e cardPassword, retornando os dados do cartão.
+      security:
+        - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardRequest'
+      responses:
+        '201':
+          description: Cartão criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardResponse'
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+
+  /cartoes/{numeroCartao}:
+    get:
+      summary: Consultar saldo do cartão
+      description: Retorna o saldo atual de um cartão pelo número.
+      security:
+        - basicAuth: []
+      parameters:
+        - name: numeroCartao
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Saldo retornado com sucesso
+          content:
+            application/json:
+              schema:
+                type: number
+                format: double
+        '404':
+          description: Cartão não encontrado
+        '401':
+          description: Não autorizado
+  /transacoes:
+    post:
+      summary: Processar uma transação
+      description: Recebe uma requisição de transação e retorna status de processamento.
+      security:
+        - basicAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequest'
+      responses:
+        '201':
+          description: Transação processada com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "OK"
+        '400':
+          description: Requisição inválida
+        '401':
+          description: Não autorizado
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+  schemas:
+    CardRequest:
+      type: object
+      properties:
+        numeroCartao:
+          type: string
+          example: "1234567890123456"
+        senha:
+          type: string
+          example: "1234"
+
+    CardResponse:
+      type: object
+      properties:
+        numeroCartao:
+          type: string
+          example: "1234567890123456"
+        senha:
+          type: string
+          example: "1234"
+        saldo:
+          type: number
+          format: double
+          example: 500.00
+
+    TransactionRequest:
+      type: object
+      properties:
+        numeroCartao:
+          type: string
+          example: "1234567890123456"
+        senha:
+          type: string
+          example: "1234"
+        valor:
+          type: number
+          format: double
+          example: 100.00
